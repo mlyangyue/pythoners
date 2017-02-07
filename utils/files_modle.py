@@ -21,7 +21,7 @@ def tar_files(sdir,suffix):
 def check_dir(path):
     """
     :func   检查文件夹是否存在
-    :param  检测路径
+    :param  path 检测路径
     """
     import os
     res = os.path.exists(path)
@@ -32,8 +32,23 @@ def check_dir(path):
         print "吧存在路径{path}".format(path=path)
     return False
 
+'''检查文件路径是否存在,不存在则创建'''
+def create_dirs(path):
+    """
+    :func   创建文件夹
+    :param  path 文件夹路径
+    """
+    import os
+    if not os.path.exists(path):
+        os.makedirs(path)
+        print "create success"
+    else:
+        print "exists"
+
+
 
 if __name__=="__main__":
     # tar_files("/Users/wangranming/myproject/logs",".log")
-    check_dir("/Users/wangranming/myproject")
+    # check_dir("/Users/wangranming/myproject")
+    create_dirs("/Users/wangranming/myproject/logs")
 
