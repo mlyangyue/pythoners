@@ -22,29 +22,34 @@ class Operation(object):
 		pass
 	pass
 
-
+#加法运算类
 class OperationAdd(Operation):
 	def GetResult(self):
 		return self.num1 + self.num2
 
+#减法运算类
 class OperationSub(Operation):
 	def GetResult(self):
 		return self.num1 - self.num2
 
+#乘法运算类
 class OperationMul(Operation):
 	def GetResult(self):
 		return self.num1 * self.num2
 
+#除法运算类
 class OperationDiv(Operation):
 	def GetResult(self):
 		if self.num2 == 0:
 			return '除数不能为0 '
 		return 1.0*self.num1 / self.num2
 
+#其他操作符类
 class OperationUndef(Operation):
 	def GetResult(self):
 		return '操作符错误'
 
+#简单工厂类
 class OperationFactory(object):
 	def choose_oper(self,ch):
 		if ch == '+':
