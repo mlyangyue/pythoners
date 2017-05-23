@@ -2,6 +2,19 @@
 # -*- coding:utf-8 -*-
 
 __author__ = 'Andy'
+"""
+rabbitmq 发布者 需要完成以下任务
+1 连接到rabbitmq
+2 获取信道
+3 声明交换器
+4 创建消息
+5 发布消息
+6 关闭信道
+7 关闭连接
+"""
+
+
+
 import pika
 import sys
 """建立到代理服务器的链接"""
