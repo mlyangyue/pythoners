@@ -1,1 +1,2 @@
 通过rabbitmq传递消息
+代码使用的rabbitmq是本地环境的rabbitmq服务
