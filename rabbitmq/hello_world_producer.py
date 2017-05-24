@@ -19,12 +19,12 @@ import pika
 import sys
 """建立到代理服务器的链接"""
 credentials = pika.PlainCredentials("guest","guest")
-conn_params = pika.ConnectionParameters("localhost",credentials=credentials)
+conn_params = pika.ConnectionParameters("127.0.0.1",credentials=credentials)
 conn_broker = pika.BlockingConnection(conn_params)
 """获得信道"""
 channel = conn_broker.channel()
 """声明交换器"""
-channel.exchange_declare(exchange="hello_exchange",
+channel.exchange_declare(exchange="hello-exchange",
                          type="direct",
                          passive=False,
                          durable=True,
@@ -36,6 +36,6 @@ msg_props.content_type = "text/plain"
 
 """发布消息"""
 channel.basic_publish(body=msg,
-                      exchange="hello_exchange",
+                      exchange="hello-exchange",
                       properties=msg_props,
                       routing_key="hola")
