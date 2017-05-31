@@ -17,6 +17,7 @@ rabbitmq 发布者 需要完成以下任务
 
 import pika
 import sys
+from pika import spec
 """建立到代理服务器的链接"""
 credentials = pika.PlainCredentials("guest","guest")
 conn_params = pika.ConnectionParameters("127.0.0.1",credentials=credentials)
@@ -29,13 +30,25 @@ channel.exchange_declare(exchange="hello-exchange",
                          passive=False,
                          durable=True,
                          auto_delete=False)
+
+
+"""设置信道为confirm模式"""
+# channel.confirm_delivery()
+# channel.basic_consume()
+
+msg_ids = []
 """创建纯文本消息"""
 msg =sys.argv[1]
 msg_props = pika.BasicProperties()
 msg_props.content_type = "text/plain"
 
 """发布消息"""
-channel.basic_publish(body=msg,
-                      exchange="hello-exchange",
-                      properties=msg_props,
-                      routing_key="hola")
+ack = channel.basic_publish(body=msg,
+                            exchange="hello-exchange",
+                            properties=msg_props,
+                            routing_key="hola")
+if ack == True:
+    print "put message to rabbitmq successed!"
+else:
+    print "put message to rabbitmq failed"
+conn_broker.close()

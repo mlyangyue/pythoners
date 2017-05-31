@@ -12,7 +12,7 @@ rabbitmq 消费者 需要执行以下任务
 6 关闭信道
 7 关闭连接
 """
-import pika
+import pika,time
 """建立到代理服务器的链接"""
 credentials = pika.PlainCredentials("guest","guest")
 conn_params = pika.ConnectionParameters("127.0.0.1",credentials=credentials)
@@ -34,6 +34,8 @@ channel.queue_bind(queue='hello-queue',
 
 """处理消息的回调"""
 def msg_consumer(channel,method,header,body):
+	print (channel,method,header,body)
+	time.sleep(5)
 	channel.basic_ack(delivery_tag=method.delivery_tag) # 消息确认
 	if body == 'quit':
 		channel.basic_cancel(consumer_tag="hello-consumer") #停止消费并退出
@@ -42,8 +44,10 @@ def msg_consumer(channel,method,header,body):
 		print body
 	return
 
+channel.basic_qos(prefetch_count=1) # 有一条消息就不接受下一条消息
 channel.basic_consume(msg_consumer,
                       queue="hello-queue",
+                      # no_ack=True,
                       consumer_tag="hello-consumer")
 channel.start_consuming()
 
